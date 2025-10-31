@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DefectAI | Final Project</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #0a0a0f;
+      color: #f2f2f2;
+      overflow-x: hidden;
+    }
+
+    canvas#particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    header {
+      height: 100vh;
+      background: linear-gradient(180deg, rgba(0,0,0,0.7), rgba(10,10,15,1)),
+                  url('2aca8ec2-15f0-417d-bc31-836d8153fda0.png') center/cover no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    header h1 {
+      font-size: 4rem;
+      letter-spacing: 2px;
+      color: #00ffd0;
+      text-shadow: 0 0 15px #00ffd0;
+      margin-bottom: 1rem;
+      animation: glow 2.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #00ffd0; }
+      to { text-shadow: 0 0 30px #00ffd0, 0 0 50px #00fff2; }
+    }
+
+    header p {
+      font-size: 1.2rem;
+      color: #ccc;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    section {
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 4rem 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    section h2 {
+      font-size: 2.5rem;
+      color: #00ffd0;
+      margin-bottom: 1rem;
+    }
+
+    section p {
+      max-width: 900px;
+      font-size: 1.1rem;
+      color: #ddd;
+      line-height: 1.8;
+    }
+
+    footer {
+      background: #050509;
+      color: #888;
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+    }
+
+    footer span {
+      color: #00ffd0;
+    }
+
+    .divider {
+      width: 60px;
+      height: 4px;
+      background: #00ffd0;
+      margin: 1rem 0 2rem;
+      border-radius: 2px;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="particles"></canvas>
+
+  <header>
+    <h1>DefectAI</h1>
+    <p>An intelligent, vision-based system that detects surface flaws on manufactured products — combining precision, speed, and accessibility.</p>
+  </header>
+
+  <section>
+    <h2>The Problem</h2>
+    <div class="divider"></div>
+    <p>Small and medium-sized manufacturers often struggle to maintain consistent product quality. Manual inspections are time-consuming, error-prone, and inconsistent — leading to unnecessary losses and customer dissatisfaction.</p>
+  </section>
+
+  <section>
+    <h2>The Solution</h2>
+    <div class="divider"></div>
+    <p>Our system, <strong>DefectAI</strong>, leverages computer vision techniques such as edge detection, thresholding, and contour analysis via OpenCV to identify scratches, deformations, or missing parts on industrial surfaces — automatically and accurately.</p>
+  </section>
+
+  <section>
+    <h2>Our Goal</h2>
+    <div class="divider"></div>
+    <p>We aim to demonstrate how accessible AI tools can transform industrial quality control by providing a cost-effective and scalable prototype for defect detection.</p>
+  </section>
+
+  <section>
+    <h2>Team</h2>
+    <div class="divider"></div>
+    <p><strong>Serra Çelik</strong> &nbsp;|&nbsp; <strong>Sıla Demirci</strong> &nbsp;|&nbsp; <strong>Zeynep Şeyma Yazar</strong> &nbsp;|&nbsp; <strong>Arda Başar Türedi</strong></p>
+  </section>
+
+  <section>
+    <h2>Supervisor & Jury</h2>
+    <div class="divider"></div>
+    <p><strong>Supervisor:</strong> Gökçe Nur Yılmaz<br>
+    <strong>Jury Members:</strong> Tansel Dökeroğlu, Ali Berkol</p>
+  </section>
+
+  <footer>
+    FINAL PROJECT — <span>DefectAI</span> | Powered by Vision, Precision & Innovation 🚀
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Animate sections smoothly on scroll
+  gsap.utils.toArray("section").forEach((sec) => {
+    gsap.from(sec, {
+      opacity: 0,
+      y: 100,
+      duration: 1.3,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: sec,
+        start: "top 85%",
+        toggleActions: "play none none reverse"
+      }
+    });
+  });
+
+  // Parallax effect for the header background
+  gsap.to("header", {
+    backgroundPositionY: "40%",
+    ease: "none",
+    scrollTrigger: {
+      trigger: "header",
+      start: "top top",
+      end: "bottom top",
+      scrub: true
+    }
+  });
+
+  // Particle background
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  let particles = [];
+  const num = 80;
+
+  class Particle {
+    constructor() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.size = Math.random() * 2;
+      this.speedX = (Math.random() - 0.5) * 0.3;
+      this.speedY = (Math.random() - 0.5) * 0.3;
+    }
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+      if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+      if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+    }
+    draw() {
+      ctx.fillStyle = 'rgba(0,255,200,0.4)';
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  function init() {
+    for (let i = 0; i < num; i++) {
+      particles.push(new Particle());
+    }
+  }
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < particles.length; i++) {
+      particles[i].update();
+      particles[i].draw();
+    }
+    requestAnimationFrame(animate);
+  }
+  init();
+  animate();
+
+  window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+  </script>
+</body>
+</html>
